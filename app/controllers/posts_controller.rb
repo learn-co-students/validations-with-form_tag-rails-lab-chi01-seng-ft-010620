@@ -9,10 +9,13 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-
     @post.update(post_params)
+    if @post.valid?
+      redirect_to post_path(@post)
+    else
+      render :edit
+    end
 
-    redirect_to post_path(@post)
   end
 
   private
@@ -20,4 +23,5 @@ class PostsController < ApplicationController
   def post_params
     params.permit(:title, :category, :content)
   end
+
 end
